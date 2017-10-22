@@ -1,16 +1,16 @@
 'use strict';
 
-const express = require('express');
-const React = require('react');
-const renderToString = require('react-dom/server').renderToString;
-const Home = require('./client/components/Home').default;
-const app = express();
-const port = 3000;
+import express from 'express';
+import renderer from './helpers/renderer';
 
-// route handler
+const port = 3000;
+const app = express();
+
+app.use(express.static('public'));
+
+// route handler, go back to server to get bundle.js out of public folder using express
 app.get('/', (req, res) => {
-  const content = renderToString(<Home /> );
-  res.send(content);
+  res.send(renderer());
 });
 
 app.listen(3000, () => {
